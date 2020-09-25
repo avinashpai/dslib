@@ -139,7 +139,7 @@ unsigned int ll_size(list *list) { return list->size; }
 bool ll_empty(list *list) { return list->size == 0; }
 
 void ll_to_string(list *list, void (*print_fmt)(unsigned int, void *)) {
-  printf("[dslib - slinked_list]\n");
+  printf("[dslib - linked_list]\n");
 
   printf("[data]: \n");
 
