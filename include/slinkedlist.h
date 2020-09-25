@@ -29,7 +29,7 @@
 #include <common.h>
 
 typedef struct node node;
-typedef struct sll sll;
+typedef struct slist slist;
 struct node {
   void *data;
   unsigned int num_elems;
@@ -37,39 +37,38 @@ struct node {
   node *next;
 };
 
-struct sll {
+struct slist {
   node *head;
   unsigned int size;
 };
 
-sll *sll_create_ll(unsigned int num_elems, size_t sizeof_data, void *data,
-                   int type);
+slist *sll_create_ll();
 
-void sll_cleanup_ll(sll *list);
+void sll_cleanup_ll(slist *list);
 
-void sll_push_front(sll *list, unsigned int num_elems, size_t sizeof_data,
+void sll_push_front(slist *list, unsigned int num_elems, size_t sizeof_data,
                     void *data, int type);
-void sll_pop_front(sll *list);
-void *front(sll *list);
+void sll_pop_front(slist *list);
+void *sll_front(slist *list);
 
-void sll_push_back(sll *list, unsigned int num_elems, size_t sizeof_data,
+void sll_push_back(slist *list, unsigned int num_elems, size_t sizeof_data,
                    void *data, int type);
-void sll_pop_back(sll *list);
-void *back(sll *list);
+void sll_pop_back(slist *list);
+void *sll_back(slist *list);
 
-bool sll_contains(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
+bool sll_contains(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-void *sll_get(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
+node *sll_get(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-void sll_remove(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
+void sll_remove(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-unsigned int sll_size(sll *list);
+unsigned int sll_size(slist *list);
 
-bool sll_empty(sll *list);
+bool sll_empty(slist *list);
 
-void sll_to_string(sll *list,
+void sll_to_string(slist *list,
                    void (*print_fmt)(unsigned int num_elems, void *data));
 
-sll *sll_sort(sll *list, int (*cmp)(void *p_data, void *q_data));
+slist *sll_sort(slist *list, int (*cmp)(void *p_data, void *q_data));
 
 #endif
