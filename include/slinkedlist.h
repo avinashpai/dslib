@@ -17,8 +17,8 @@
       - O(nlogn)
       - provide cmp function pointer with comparision function for node data
   - Misc.
-    - sll_contains, sll_to_string, and sll_sort only work if all the nodes
-      contain values of the same type
+    - sll_contains, sll_get, sll_remove, sll_to_string, and sll_sort only work
+  if all the nodes contain values of the same type
     - to use these functions provide them with a pointer to a function that
       defines the comparison or print format for the desired type
 */
