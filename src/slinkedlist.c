@@ -22,6 +22,11 @@ void sll_cleanup_ll(slist *list) {
   list = NULL;
 }
 
+void sll_clear(slist *list) {
+  sll_cleanup_ll(list);
+  list = sll_create_ll();
+}
+
 void sll_push_front(slist *list, unsigned int num_elems, size_t sizeof_data,
                     void *data, int type) {
   node *new_node = sll_create_node(num_elems, sizeof_data, data, type);

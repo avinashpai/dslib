@@ -46,6 +46,8 @@ slist *sll_create_ll();
 
 void sll_cleanup_ll(slist *list);
 
+void sll_clear(slist *list);
+
 void sll_push_front(slist *list, unsigned int num_elems, size_t sizeof_data,
                     void *data, int type);
 void sll_pop_front(slist *list);

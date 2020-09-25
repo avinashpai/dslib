@@ -20,6 +20,12 @@ void ll_cleanup_ll(list *list) {
     ll_free(tmp);
   }
   free(list);
+  list = NULL;
+}
+
+void ll_clear(list *list) {
+  ll_cleanup_ll(list);
+  list = ll_create_ll();
 }
 
 void ll_push_front(list *list, unsigned int num_elems, size_t sizeof_data,

@@ -24,6 +24,8 @@ list *ll_create_ll();
 
 void ll_cleanup_ll(list *list);
 
+void ll_clear(list *list);
+
 void ll_push_front(list *list, unsigned int num_elems, size_t sizeof_data,
                    void *data, int type);
 void ll_pop_front(list *list);
