@@ -97,6 +97,33 @@ bool sll_contains(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
   return false;
 }
 
+void *sll_get(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
+  node *tmp = head;
+
+  while (tmp != NULL) {
+    if (cmp(data, tmp->data)) {
+      return tmp->data;
+    }
+
+    tmp = tmp->next;
+  }
+
+  return NULL;
+}
+
+void sll_remove(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
+  node *tmp = head;
+
+  while (tmp != NULL) {
+    if (cmp(data, tmp->data)) {
+      free(tmp->data);
+      tmp->data = NULL;
+    }
+
+    tmp = tmp->next;
+  }
+}
+
 size_t sll_size() { return size; }
 
 bool sll_empty() { return size == 0; }

@@ -51,6 +51,10 @@ void *back(node *head);
 
 bool sll_contains(node *head, void *data, bool (*cmp)(void *d1, void *d2));
 
+void *sll_get(node *head, void *data, bool (*cmp)(void *d1, void *d2));
+
+void sll_remove(node *head, void *data, bool (*cmp)(void *d1, void *d2));
+
 size_t sll_size();
 
 bool sll_empty();
