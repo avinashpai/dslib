@@ -101,9 +101,7 @@ size_t sll_size() { return size; }
 
 bool sll_empty() { return size == 0; }
 
-void sll_to_string(node *head,
-                   void (*printFmt)(int num_elems, size_t sizeof_data,
-                                    void *data)) {
+void sll_to_string(node *head, void (*printFmt)(int num_elems, void *data)) {
 
   printf("[dslib - slinked_list]\n");
 
@@ -111,7 +109,7 @@ void sll_to_string(node *head,
 
   node *tmp = head;
   while (tmp != NULL) {
-    printFmt(tmp->num_elems, tmp->sizeof_data, tmp->data);
+    printFmt(tmp->num_elems, tmp->data);
 
     tmp = tmp->next;
   }
@@ -234,7 +232,6 @@ static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
       }
 
       new_node->num_elems = num_elems;
-      new_node->sizeof_data = sizeof_data;
       new_node->type = type;
       new_node->next = NULL;
 

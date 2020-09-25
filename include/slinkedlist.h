@@ -31,7 +31,6 @@ typedef struct node node;
 struct node {
   void *data;
   int num_elems;
-  size_t sizeof_data;
   int type;
   node *next;
 };
@@ -56,9 +55,7 @@ size_t sll_size();
 
 bool sll_empty();
 
-void sll_to_string(node *head,
-                   void (*print_fmt)(int num_elems, size_t sizeof_data,
-                                     void *data));
+void sll_to_string(node *head, void (*print_fmt)(int num_elems, void *data));
 
 void sll_free(node *n);
 

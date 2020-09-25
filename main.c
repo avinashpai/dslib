@@ -4,17 +4,15 @@ typedef enum { INT, FLOAT, FLOAT_ARR, CHAR, STRING, STRUCT } type;
 
 bool cmpInts(void *d1, void *d2) { return *(int *)d1 == *(int *)d2; }
 
-void float_arr_print_fmt(int length, size_t sizeof_data, void *data) {
+void float_arr_print_fmt(int length, void *data) {
   printf("  [");
-  for (size_t i = 0; i < length * sizeof_data; i += sizeof_data) {
+  for (size_t i = 0; i < length * sizeof(float); i += sizeof(float)) {
     printf(" (%f) ", *(float *)(data + i));
   }
   printf("]\n");
 }
 
-void int_print_fmt(int length, size_t sizeof_data, void *data) {
-  printf("  [%d]\n", *(int *)data);
-}
+void int_print_fmt(int length, void *data) { printf("  [%d]\n", *(int *)data); }
 
 int int_cmp(void *p_data, void *q_data) {
   return *(int *)p_data - *(int *)q_data;
