@@ -2,6 +2,7 @@
 
 static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
                              int type);
+static void sll_free(node *n);
 
 static size_t size;
 
@@ -151,7 +152,7 @@ void sll_to_string(sll *list, void (*printFmt)(int num_elems, void *data)) {
   printf("\n");
 }
 
-void sll_free(node *n) {
+static void sll_free(node *n) {
   free(n->data);
   free(n);
   n = NULL;
