@@ -1,12 +1,13 @@
 #include <slinkedlist.h>
 
-static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
-                             int type);
+static node *sll_create_node(unsigned int num_elems, size_t sizeof_data,
+                             void *data, int type);
 static void sll_free(node *n);
 
 static size_t size;
 
-sll *sll_create_ll(int num_elems, size_t sizeof_data, void *data, int type) {
+sll *sll_create_ll(unsigned int num_elems, size_t sizeof_data, void *data,
+                   int type) {
   sll *new_sll = malloc(sizeof(sll));
   new_sll->head = sll_create_node(num_elems, sizeof_data, data, type);
   new_sll->size = 1;
@@ -22,8 +23,8 @@ void sll_cleanup_ll(sll *list) {
   }
 }
 
-void sll_push_front(sll *list, int num_elems, size_t sizeof_data, void *data,
-                    int type) {
+void sll_push_front(sll *list, unsigned int num_elems, size_t sizeof_data,
+                    void *data, int type) {
   node *new_node = sll_create_node(num_elems, sizeof_data, data, type);
   list->size++;
 
@@ -45,8 +46,8 @@ void sll_pop_front(sll *list) {
 
 void *front(sll *list) { return list->head != NULL ? list->head->data : NULL; }
 
-void sll_push_back(sll *list, int num_elems, size_t sizeof_data, void *data,
-                   int type) {
+void sll_push_back(sll *list, unsigned int num_elems, size_t sizeof_data,
+                   void *data, int type) {
   node *last_node = list->head;
 
   node *new_node = sll_create_node(num_elems, sizeof_data, data, type);
@@ -132,11 +133,12 @@ void sll_remove(sll *list, void *data, bool (*cmp)(void *d1, void *d2)) {
   }
 }
 
-size_t sll_size(sll *list) { return list->size; }
+unsigned int sll_size(sll *list) { return list->size; }
 
 bool sll_empty(sll *list) { return list->size == 0; }
 
-void sll_to_string(sll *list, void (*printFmt)(int num_elems, void *data)) {
+void sll_to_string(sll *list,
+                   void (*printFmt)(unsigned int num_elems, void *data)) {
 
   printf("[dslib - slinked_list]\n");
 
@@ -237,8 +239,8 @@ sll *sll_sort(sll *list, int (*cmp)(void *p_data, void *q_data)) {
   }
 }
 
-static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
-                             int type) {
+static node *sll_create_node(unsigned int num_elems, size_t sizeof_data,
+                             void *data, int type) {
   node *new_node = malloc(sizeof(node));
 
   if (new_node != NULL) {
@@ -251,8 +253,8 @@ static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
         void *tmp1 = new_node->data;
         void *tmp2 = data;
 
-        for (int i = 0; i < num_elems * sizeof_data; i += sizeof_data) {
-          for (int j = 0; j < sizeof_data; ++j) {
+        for (size_t i = 0; i < num_elems * sizeof_data; i += sizeof_data) {
+          for (size_t j = 0; j < sizeof_data; ++j) {
             *((uint8_t *)(tmp1 + j)) = *((uint8_t *)(tmp2 + j));
           }
           tmp1 += sizeof_data;
@@ -261,7 +263,7 @@ static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
 
       } else {
 
-        for (int i = 0; i < sizeof_data; ++i) {
+        for (size_t i = 0; i < sizeof_data; ++i) {
           *((uint8_t *)(new_node->data + i)) = *((uint8_t *)(data + i));
         }
       }

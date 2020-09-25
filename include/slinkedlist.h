@@ -32,27 +32,28 @@ typedef struct node node;
 typedef struct sll sll;
 struct node {
   void *data;
-  int num_elems;
+  unsigned int num_elems;
   int type;
   node *next;
 };
 
 struct sll {
   node *head;
-  int size;
+  unsigned int size;
 };
 
-sll *sll_create_ll(int num_elems, size_t sizeof_data, void *data, int type);
+sll *sll_create_ll(unsigned int num_elems, size_t sizeof_data, void *data,
+                   int type);
 
 void sll_cleanup_ll(sll *list);
 
-void sll_push_front(sll *list, int num_elems, size_t sizeof_data, void *data,
-                    int type);
+void sll_push_front(sll *list, unsigned int num_elems, size_t sizeof_data,
+                    void *data, int type);
 void sll_pop_front(sll *list);
 void *front(sll *list);
 
-void sll_push_back(sll *list, int num_elems, size_t sizeof_data, void *data,
-                   int type);
+void sll_push_back(sll *list, unsigned int num_elems, size_t sizeof_data,
+                   void *data, int type);
 void sll_pop_back(sll *list);
 void *back(sll *list);
 
@@ -62,11 +63,12 @@ void *sll_get(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
 
 void sll_remove(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-size_t sll_size(sll *list);
+unsigned int sll_size(sll *list);
 
 bool sll_empty(sll *list);
 
-void sll_to_string(sll *list, void (*print_fmt)(int num_elems, void *data));
+void sll_to_string(sll *list,
+                   void (*print_fmt)(unsigned int num_elems, void *data));
 
 sll *sll_sort(sll *list, int (*cmp)(void *p_data, void *q_data));
 

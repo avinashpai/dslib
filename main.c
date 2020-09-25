@@ -4,7 +4,7 @@ typedef enum { INT, FLOAT, FLOAT_ARR, CHAR, STRING, STRUCT } type;
 
 bool cmpInts(void *d1, void *d2) { return *(int *)d1 == *(int *)d2; }
 
-void float_arr_print_fmt(int length, void *data) {
+void float_arr_print_fmt(unsigned int length, void *data) {
   printf("  [");
   for (size_t i = 0; i < length * sizeof(float); i += sizeof(float)) {
     printf(" (%f) ", *(float *)(data + i));
@@ -12,7 +12,9 @@ void float_arr_print_fmt(int length, void *data) {
   printf("]\n");
 }
 
-void int_print_fmt(int length, void *data) { printf("  [%d]\n", *(int *)data); }
+void int_print_fmt(unsigned int length, void *data) {
+  printf("  [%d]\n", *(int *)data);
+}
 
 int int_cmp(void *p_data, void *q_data) {
   return *(int *)p_data - *(int *)q_data;
@@ -41,8 +43,8 @@ int main(int argc, char **argv) {
   printf("SORTED: \n");
   sll_to_string(ll2_sorted, int_print_fmt);
 
-  printf("ll1 size: %zu\n", sll_size(ll1));
-  printf("ll2 size: %zu\n", sll_size(ll2));
+  printf("ll1 size: %u\n", sll_size(ll1));
+  printf("ll2 size: %u\n", sll_size(ll2));
 
   printf("ll1 empty? %s\n", sll_empty(ll1) ? "true" : "false");
   printf("ll2 empty? %s\n", sll_empty(ll2) ? "true" : "false");
