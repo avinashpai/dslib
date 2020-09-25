@@ -5,49 +5,54 @@ static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
 
 static size_t size;
 
-node *sll_create_ll(int num_elems, size_t sizeof_data, void *data, int type) {
-  size = 0;
-  return sll_create_node(num_elems, sizeof_data, data, type);
+sll *sll_create_ll(int num_elems, size_t sizeof_data, void *data, int type) {
+  sll *new_sll = malloc(sizeof(sll));
+  new_sll->head = sll_create_node(num_elems, sizeof_data, data, type);
+  new_sll->size = 1;
+  return new_sll;
 }
 
-void sll_cleanup_ll(node *head) {
-  while (head != NULL) {
-    node *tmp = head;
-    head = head->next;
+void sll_cleanup_ll(sll *list) {
+  while (list->head != NULL) {
+    node *tmp = list->head;
+    list->head = list->head->next;
 
     sll_free(tmp);
   }
 }
 
-void sll_push_front(node **head, int num_elems, size_t sizeof_data, void *data,
+void sll_push_front(sll *list, int num_elems, size_t sizeof_data, void *data,
                     int type) {
   node *new_node = sll_create_node(num_elems, sizeof_data, data, type);
+  list->size++;
 
-  if (*head != NULL) {
-    new_node->next = *head;
+  if (list->head != NULL) {
+    new_node->next = list->head;
   }
 
-  *head = new_node;
+  list->head = new_node;
 }
 
-void sll_pop_front(node **head) {
-  if (*head != NULL) {
-    node *tmp = *head;
-    *head = (*head)->next;
+void sll_pop_front(sll *list) {
+  if (list->head != NULL) {
+    node *tmp = list->head;
+    list->head = list->head->next;
     sll_free(tmp);
+    list->size--;
   }
 }
 
-void *front(node *head) { return head != NULL ? head->data : NULL; }
+void *front(sll *list) { return list->head != NULL ? list->head->data : NULL; }
 
-void sll_push_back(node **head, int num_elems, size_t sizeof_data, void *data,
+void sll_push_back(sll *list, int num_elems, size_t sizeof_data, void *data,
                    int type) {
-  node *last_node = *head;
+  node *last_node = list->head;
 
   node *new_node = sll_create_node(num_elems, sizeof_data, data, type);
+  list->size++;
 
   if (last_node == NULL) {
-    *head = last_node;
+    list->head = last_node;
   } else {
     while (last_node->next != NULL) {
       last_node = last_node->next;
@@ -56,8 +61,8 @@ void sll_push_back(node **head, int num_elems, size_t sizeof_data, void *data,
   }
 }
 
-void sll_pop_back(node **head) {
-  node *last_node = *head;
+void sll_pop_back(sll *list) {
+  node *last_node = list->head;
 
   if (last_node != NULL) {
     while (last_node->next->next != NULL) {
@@ -66,15 +71,16 @@ void sll_pop_back(node **head) {
     node *tmp = last_node->next;
     last_node->next = NULL;
     sll_free(tmp);
+    list->size--;
   }
 }
 
-void *back(node *head) {
-  if (head == NULL) {
+void *back(sll *list) {
+  if (list->head == NULL) {
     return NULL;
   }
 
-  node *tmp = head;
+  node *tmp = list->head;
 
   while (tmp != NULL) {
     tmp = tmp->next;
@@ -83,8 +89,8 @@ void *back(node *head) {
   return tmp->data;
 }
 
-bool sll_contains(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
-  node *tmp = head;
+bool sll_contains(sll *list, void *data, bool (*cmp)(void *d1, void *d2)) {
+  node *tmp = list->head;
 
   while (tmp != NULL) {
     if (cmp(data, tmp->data)) {
@@ -97,8 +103,8 @@ bool sll_contains(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
   return false;
 }
 
-void *sll_get(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
-  node *tmp = head;
+void *sll_get(sll *list, void *data, bool (*cmp)(void *d1, void *d2)) {
+  node *tmp = list->head;
 
   while (tmp != NULL) {
     if (cmp(data, tmp->data)) {
@@ -111,30 +117,31 @@ void *sll_get(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
   return NULL;
 }
 
-void sll_remove(node *head, void *data, bool (*cmp)(void *d1, void *d2)) {
-  node *tmp = head;
+void sll_remove(sll *list, void *data, bool (*cmp)(void *d1, void *d2)) {
+  node *tmp = list->head;
 
   while (tmp != NULL) {
     if (cmp(data, tmp->data)) {
       free(tmp->data);
       tmp->data = NULL;
+      list->size--;
     }
 
     tmp = tmp->next;
   }
 }
 
-size_t sll_size() { return size; }
+size_t sll_size(sll *list) { return list->size; }
 
-bool sll_empty() { return size == 0; }
+bool sll_empty(sll *list) { return list->size == 0; }
 
-void sll_to_string(node *head, void (*printFmt)(int num_elems, void *data)) {
+void sll_to_string(sll *list, void (*printFmt)(int num_elems, void *data)) {
 
   printf("[dslib - slinked_list]\n");
 
   printf("[data]: \n");
 
-  node *tmp = head;
+  node *tmp = list->head;
   while (tmp != NULL) {
     printFmt(tmp->num_elems, tmp->data);
 
@@ -157,19 +164,19 @@ void sll_free(node *n) {
   q->data returns 0, and p->data > q->data returns > 0.
 
 */
-node *sll_sort(node *head, int (*cmp)(void *p_data, void *q_data)) {
+sll *sll_sort(sll *list, int (*cmp)(void *p_data, void *q_data)) {
   node *p, *q, *e, *tail;
   int insize, nmerges, psize, qsize, i;
 
-  if (!head) {
+  if (!list->head) {
     return NULL;
   }
 
   insize = 1;
 
   while (1) {
-    p = head;
-    head = NULL;
+    p = list->head;
+    list->head = NULL;
     tail = NULL;
 
     nmerges = 0;
@@ -210,7 +217,7 @@ node *sll_sort(node *head, int (*cmp)(void *p_data, void *q_data)) {
         if (tail) {
           tail->next = e;
         } else {
-          head = e;
+          list->head = e;
         }
 
         tail = e;
@@ -222,7 +229,7 @@ node *sll_sort(node *head, int (*cmp)(void *p_data, void *q_data)) {
     tail->next = NULL;
 
     if (nmerges <= 1) {
-      return head;
+      return list;
     }
 
     insize *= 2;
@@ -262,7 +269,6 @@ static node *sll_create_node(int num_elems, size_t sizeof_data, void *data,
       new_node->type = type;
       new_node->next = NULL;
 
-      size++;
       return new_node;
     }
   }

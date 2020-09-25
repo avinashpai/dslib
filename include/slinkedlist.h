@@ -18,16 +18,19 @@
       - provide cmp function pointer with comparision function for node data
   - Misc.
     - sll_contains, sll_get, sll_remove, sll_to_string, and sll_sort only work
-  if all the nodes contain values of the same type
+      if all the nodes contain values of the same type
     - to use these functions provide them with a pointer to a function that
       defines the comparison or print format for the desired type
+    - type member is of type int and can be used along with enums to indentify
+      the type
+
 */
 #ifndef SLINKED_LIST_H
 #define SLINKED_LIST_H
 #include <common.h>
 
 typedef struct node node;
-
+typedef struct sll sll;
 struct node {
   void *data;
   int num_elems;
@@ -35,34 +38,39 @@ struct node {
   node *next;
 };
 
-node *sll_create_ll(int num_elems, size_t sizeof_data, void *data, int type);
+struct sll {
+  node *head;
+  int size;
+};
 
-void sll_cleanup_ll(node *head);
+sll *sll_create_ll(int num_elems, size_t sizeof_data, void *data, int type);
 
-void sll_push_front(node **head, int num_elems, size_t sizeof_data, void *data,
+void sll_cleanup_ll(sll *list);
+
+void sll_push_front(sll *list, int num_elems, size_t sizeof_data, void *data,
                     int type);
-void sll_pop_front(node **head);
-void *front(node *head);
+void sll_pop_front(sll *list);
+void *front(sll *list);
 
-void sll_push_back(node **head, int num_elems, size_t sizeof_data, void *data,
+void sll_push_back(sll *list, int num_elems, size_t sizeof_data, void *data,
                    int type);
-void sll_pop_back(node **head);
-void *back(node *head);
+void sll_pop_back(sll *list);
+void *back(sll *list);
 
-bool sll_contains(node *head, void *data, bool (*cmp)(void *d1, void *d2));
+bool sll_contains(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-void *sll_get(node *head, void *data, bool (*cmp)(void *d1, void *d2));
+void *sll_get(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-void sll_remove(node *head, void *data, bool (*cmp)(void *d1, void *d2));
+void sll_remove(sll *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-size_t sll_size();
+size_t sll_size(sll *list);
 
-bool sll_empty();
+bool sll_empty(sll *list);
 
-void sll_to_string(node *head, void (*print_fmt)(int num_elems, void *data));
+void sll_to_string(sll *list, void (*print_fmt)(int num_elems, void *data));
 
 void sll_free(node *n);
 
-node *sll_sort(node *head, int (*cmp)(void *p_data, void *q_data));
+sll *sll_sort(sll *list, int (*cmp)(void *p_data, void *q_data));
 
 #endif

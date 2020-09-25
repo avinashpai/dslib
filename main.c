@@ -27,17 +27,17 @@ int main(int argc, char **argv) {
   float arr2[3] = {4.f, 5.f, 6.f};
   float arr3[3] = {7.f, 8.f, 9.f};
 
-  node *ll1 = sll_create_ll(3, sizeof(float), arr3, FLOAT_ARR);
-  sll_push_front(&ll1, 3, sizeof(float), arr2, FLOAT_ARR);
-  sll_push_front(&ll1, 3, sizeof(float), arr1, FLOAT_ARR);
+  sll *ll1 = sll_create_ll(3, sizeof(float), arr3, FLOAT_ARR);
+  sll_push_front(ll1, 3, sizeof(float), arr2, FLOAT_ARR);
+  sll_push_front(ll1, 3, sizeof(float), arr1, FLOAT_ARR);
 
-  node *ll2 = sll_create_ll(1, sizeof(int), &n3, INT);
-  sll_push_front(&ll2, 1, sizeof(int), &n2, INT);
-  sll_push_front(&ll2, 1, sizeof(int), &n1, INT);
+  sll *ll2 = sll_create_ll(1, sizeof(int), &n3, INT);
+  sll_push_front(ll2, 1, sizeof(int), &n2, INT);
+  sll_push_front(ll2, 1, sizeof(int), &n1, INT);
 
   sll_to_string(ll1, float_arr_print_fmt);
   sll_to_string(ll2, int_print_fmt);
-  node *ll2_sorted = sll_sort(ll2, int_cmp);
+  sll *ll2_sorted = sll_sort(ll2, int_cmp);
   printf("SORTED: \n");
   sll_to_string(ll2_sorted, int_print_fmt);
 
