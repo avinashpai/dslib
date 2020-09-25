@@ -22,7 +22,8 @@
     - to use these functions provide them with a pointer to a function that
       defines the comparison or print format for the desired type
 */
-
+#ifndef SLINKED_LIST_H
+#define SLINKED_LIST_H
 #include <common.h>
 
 typedef struct node node;
@@ -62,3 +63,5 @@ void sll_to_string(node *head,
 void sll_free(node *n);
 
 node *sll_sort(node *head, int (*cmp)(void *p_data, void *q_data));
+
+#endif
