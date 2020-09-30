@@ -50,7 +50,7 @@ typedef struct slist slist;
 #define SLL_SIZE(list) sll_size(&list)
 #define SLL_EMPTY(list) sll_empty(&list)
 #define SLL_TO_STRING(list, print_fmt) sll_to_string(&list, print_fmt)
-#define SLL_SORT(list, cmp) sll_sort(&list, cmp)
+#define SLL_SORT(list, cmp) *sll_sort(&list, cmp)
 
 struct node {
   void *data;

@@ -40,9 +40,9 @@ int main(int argc, char **argv) {
 
   SLL_TO_STRING(ll1, float_arr_print_fmt);
   SLL_TO_STRING(ll2, int_print_fmt);
-  slist *ll2_sorted = SLL_SORT(ll2, int_cmp);
+  slist ll2_sorted = SLL_SORT(ll2, int_cmp);
   printf("SORTED: \n");
-  SLL_TO_STRING(*ll2_sorted, int_print_fmt);
+  SLL_TO_STRING(ll2_sorted, int_print_fmt);
 
   printf("ll1 size: %zu\n", sll_size(&ll1));
   printf("ll2 size: %zu\n", sll_size(&ll2));
