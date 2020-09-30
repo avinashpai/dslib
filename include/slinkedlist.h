@@ -30,30 +30,52 @@
 
 typedef struct node node;
 typedef struct slist slist;
+
+#define SLL_CREATE(name)                                                       \
+  slist name;                                                                  \
+  sll_create(&name)
+#define SLL_CLEANUP(list) sll_cleanup(&list)
+#define SLL_CLEAR(list) sll_clear(&list)
+#define SLL_PUSH_FRONT(list, num_elems, sizeof_data, data, type)               \
+  sll_push_front(&list, num_elems, sizeof_data, (void *)data, type)
+#define SLL_POP_FRONT(list) sll_pop_front(&list)
+#define SLL_FRONT(list, type) *(type *)sll_front(&list)
+#define SLL_PUSH_BACK(list, num_elems, sizeof_data, data, type)                \
+  sll_push_back(&list, num_elems, sizeof_data, (void *)data, type)
+#define SLL_POP_BACK(list) sll_pop_back(&list)
+#define SLL_BACK(list, type) *(type *)sll_back(&list)
+#define SLL_CONTAINS(list, data, cmp) sll_contains(&list, data, cmp)
+#define SLL_GET(list, data, cmp) sll_get(&list, data, cmp)
+#define SLL_REMOVE(list, data, cmp) sll_remove(&list, data, cmp)
+#define SLL_SIZE(list) sll_size(&list)
+#define SLL_EMPTY(list) sll_empty(&list)
+#define SLL_TO_STRING(list, print_fmt) sll_to_string(&list, print_fmt)
+#define SLL_SORT(list, cmp) sll_sort(&list, cmp)
+
 struct node {
   void *data;
-  unsigned int num_elems;
+  size_t num_elems;
   int type;
   node *next;
 };
 
 struct slist {
   node *head;
-  unsigned int size;
+  size_t size;
 };
 
-slist *sll_create_ll();
+void sll_create(slist *list);
 
-void sll_cleanup_ll(slist *list);
+void sll_cleanup(slist *list);
 
 void sll_clear(slist *list);
 
-void sll_push_front(slist *list, unsigned int num_elems, size_t sizeof_data,
+void sll_push_front(slist *list, size_t num_elems, size_t sizeof_data,
                     void *data, int type);
 void sll_pop_front(slist *list);
 void *sll_front(slist *list);
 
-void sll_push_back(slist *list, unsigned int num_elems, size_t sizeof_data,
+void sll_push_back(slist *list, size_t num_elems, size_t sizeof_data,
                    void *data, int type);
 void sll_pop_back(slist *list);
 void *sll_back(slist *list);
@@ -64,12 +86,12 @@ node *sll_get(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 
 void sll_remove(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-unsigned int sll_size(slist *list);
+size_t sll_size(slist *list);
 
 bool sll_empty(slist *list);
 
 void sll_to_string(slist *list,
-                   void (*print_fmt)(unsigned int num_elems, void *data));
+                   void (*print_fmt)(size_t num_elems, void *data));
 
 slist *sll_sort(slist *list, int (*cmp)(void *p_data, void *q_data));
 

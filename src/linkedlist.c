@@ -1,35 +1,33 @@
 #include <linkedlist.h>
 
-static node *ll_create_node(unsigned int num_elems, size_t sizeof_data,
-                            void *data, int type);
+static node *ll_create_node(size_t num_elems, size_t sizeof_data, void *data,
+                            int type);
 static void ll_free(node *n);
 
-list *ll_create_ll() {
-  list *new_ll = malloc(sizeof(list));
-  new_ll->head = NULL;
-  new_ll->tail = NULL;
-  new_ll->size = 0;
-  return new_ll;
+void ll_create(list *list) {
+  list->head = NULL;
+  list->tail = NULL;
+  list->size = 0;
 }
 
-void ll_cleanup_ll(list *list) {
+void ll_cleanup(list *list) {
   while (list->head != NULL) {
     node *tmp = list->head;
     list->head = list->head->next;
 
     ll_free(tmp);
   }
-  free(list);
-  list = NULL;
 }
 
 void ll_clear(list *list) {
-  ll_cleanup_ll(list);
-  list = ll_create_ll();
+  ll_cleanup(list);
+  list->head = NULL;
+  list->tail = NULL;
+  list->size = 0;
 }
 
-void ll_push_front(list *list, unsigned int num_elems, size_t sizeof_data,
-                   void *data, int type) {
+void ll_push_front(list *list, size_t num_elems, size_t sizeof_data, void *data,
+                   int type) {
   node *new_node = ll_create_node(num_elems, sizeof_data, data, type);
   list->size++;
 
@@ -55,8 +53,8 @@ void *ll_front(list *list) {
   return list->head != NULL ? list->head->data : NULL;
 }
 
-void ll_push_back(list *list, unsigned int num_elems, size_t sizeof_data,
-                  void *data, int type) {
+void ll_push_back(list *list, size_t num_elems, size_t sizeof_data, void *data,
+                  int type) {
   node *new_node = ll_create_node(num_elems, sizeof_data, data, type);
   list->size++;
 
@@ -140,11 +138,11 @@ void ll_remove(list *list, void *data, bool (*cmp)(void *, void *)) {
   }
 }
 
-unsigned int ll_size(list *list) { return list->size; }
+size_t ll_size(list *list) { return list->size; }
 
 bool ll_empty(list *list) { return list->size == 0; }
 
-void ll_to_string(list *list, void (*print_fmt)(unsigned int, void *)) {
+void ll_to_string(list *list, void (*print_fmt)(size_t, void *)) {
   printf("[dslib - linked_list]\n");
 
   printf("[data]: \n");
@@ -228,8 +226,8 @@ list *ll_sort(list *list, int (*cmp)(void *, void *)) {
   }
 }
 
-static node *ll_create_node(unsigned int num_elems, size_t sizeof_data,
-                            void *data, int type) {
+static node *ll_create_node(size_t num_elems, size_t sizeof_data, void *data,
+                            int type) {
   node *new_node = malloc(sizeof(node));
 
   if (new_node != NULL) {

@@ -1,33 +1,30 @@
 #include <slinkedlist.h>
 
-static node *sll_create_node(unsigned int num_elems, size_t sizeof_data,
-                             void *data, int type);
+static node *sll_create_node(size_t num_elems, size_t sizeof_data, void *data,
+                             int type);
 static void sll_free(node *n);
 
-slist *sll_create_ll() {
-  slist *new_sll = malloc(sizeof(slist));
-  new_sll->head = NULL;
-  new_sll->size = 0;
-  return new_sll;
+void sll_create(slist *list) {
+  list->head = NULL;
+  list->size = 0;
 }
 
-void sll_cleanup_ll(slist *list) {
+void sll_cleanup(slist *list) {
   while (list->head != NULL) {
     node *tmp = list->head;
     list->head = list->head->next;
 
     sll_free(tmp);
   }
-  free(list);
-  list = NULL;
 }
 
 void sll_clear(slist *list) {
-  sll_cleanup_ll(list);
-  list = sll_create_ll();
+  sll_cleanup(list);
+  list->head = NULL;
+  list->size = 0;
 }
 
-void sll_push_front(slist *list, unsigned int num_elems, size_t sizeof_data,
+void sll_push_front(slist *list, size_t num_elems, size_t sizeof_data,
                     void *data, int type) {
   node *new_node = sll_create_node(num_elems, sizeof_data, data, type);
   list->size++;
@@ -52,7 +49,7 @@ void *front(slist *list) {
   return list->head != NULL ? list->head->data : NULL;
 }
 
-void sll_push_back(slist *list, unsigned int num_elems, size_t sizeof_data,
+void sll_push_back(slist *list, size_t num_elems, size_t sizeof_data,
                    void *data, int type) {
   node *last_node = list->head;
 
@@ -141,12 +138,12 @@ void sll_remove(slist *list, void *data, bool (*cmp)(void *d1, void *d2)) {
   }
 }
 
-unsigned int sll_size(slist *list) { return list->size; }
+size_t sll_size(slist *list) { return list->size; }
 
 bool sll_empty(slist *list) { return list->size == 0; }
 
 void sll_to_string(slist *list,
-                   void (*print_fmt)(unsigned int num_elems, void *data)) {
+                   void (*print_fmt)(size_t num_elems, void *data)) {
 
   printf("[dslib - slinked_list]\n");
 
@@ -241,8 +238,8 @@ slist *sll_sort(slist *list, int (*cmp)(void *p_data, void *q_data)) {
   }
 }
 
-static node *sll_create_node(unsigned int num_elems, size_t sizeof_data,
-                             void *data, int type) {
+static node *sll_create_node(size_t num_elems, size_t sizeof_data, void *data,
+                             int type) {
   node *new_node = malloc(sizeof(node));
 
   if (new_node != NULL) {
