@@ -25,7 +25,7 @@ typedef struct list list;
 #define LL_SIZE(list) ll_size(&list)
 #define LL_EMPTY(list) ll_empty(&list)
 #define LL_TO_STRING(list, print_fmt) ll_to_string(&list, print_fmt)
-#define LL_SORT(list, cmp) ll_sort(&list, cmp)
+#define LL_SORT(list, cmp) *ll_sort(&list, cmp)
 
 struct node {
   node *prev;

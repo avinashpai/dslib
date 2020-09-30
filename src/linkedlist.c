@@ -169,6 +169,7 @@ list *ll_sort(list *list, int (*cmp)(void *, void *)) {
   while (1) {
     p = list->head;
     list->head = NULL;
+    tail = NULL;
 
     nmerges = 0;
 
@@ -195,7 +196,7 @@ list *ll_sort(list *list, int (*cmp)(void *, void *)) {
           e = p;
           p = p->next;
           psize--;
-        } else if (cmp(p, q) < 0) {
+        } else if (cmp(p, q) <= 0) {
           e = p;
           p = p->next;
           psize--;
