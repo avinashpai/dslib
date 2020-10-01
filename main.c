@@ -1,3 +1,4 @@
+#include <array.h>
 #include <linkedlist.h>
 
 typedef enum { INT, FLOAT, FLOAT_ARR, CHAR, STRING, STRUCT } type;
@@ -37,6 +38,7 @@ int main(int argc, char **argv) {
   LL_PUSH_FRONT(ll2, 1, sizeof(int), &n3, INT);
   LL_PUSH_FRONT(ll2, 1, sizeof(int), &n2, INT);
   LL_PUSH_FRONT(ll2, 1, sizeof(int), &n1, INT);
+  LL_PUSH_FRONT(ll2, 1, sizeof(int), &n2, INT);
 
   LL_TO_STRING(ll1, float_arr_print_fmt);
   LL_TO_STRING(ll2, int_print_fmt);
@@ -52,6 +54,13 @@ int main(int argc, char **argv) {
 
   LL_CLEANUP(ll1);
   LL_CLEANUP(ll2);
+
+  ARRAY_CREATE(arr, INT);
+  ARRAY_ADD(arr, &n1);
+  ARRAY_ADD(arr, &n2);
+  ARRAY_ADD(arr, &n3);
+  // ARRAY_SET(arr, &n2, 2);
+  ARRAY_TO_STRING(arr, int_print_fmt);
 
   return 0;
 }

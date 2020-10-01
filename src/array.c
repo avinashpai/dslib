@@ -59,6 +59,17 @@ void array_cleanup(array *arr) {
   free(arr->elements);
 }
 
+void array_to_string(array *arr,
+                     void (*print_fmt)(size_t num_elems, void *data)) {
+  printf("[dslib - array]\n");
+  printf("[data]: \n");
+
+  for (size_t i = 0; i < arr->size; ++i) {
+    print_fmt(1, arr->elements[i]);
+  }
+  printf("\n");
+}
+
 static void array_resize(array *arr, size_t capacity) {
   void **elements = realloc(arr->elements, sizeof(void *) * capacity);
   if (elements) {
