@@ -156,6 +156,7 @@ void ll_to_string(list *list, void (*print_fmt)(size_t, void *)) {
   printf("\n");
 }
 
+// TODO: FIX LIST SORTING
 list *ll_sort(list *list, int (*cmp)(void *, void *)) {
   node *p, *q, *e, *tail;
   int insize, nmerges, psize, qsize, i;

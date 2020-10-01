@@ -59,11 +59,15 @@ int main(int argc, char **argv) {
   ARRAY_ADD(arr, n1);
   ARRAY_ADD(arr, n2);
   ARRAY_ADD(arr, n3);
+  ARRAY_ADD(arr, n1);
+  ARRAY_ADD(arr, n3);
   ARRAY_SET(arr, n2, 2);
   ARRAY_DELETE(arr, 1);
   ARRAY_TO_STRING(arr, int_print_fmt);
   int element = ARRAY_GET(arr, 0, int);
-  printf("GET arr[0]: %d\n\n", element);
+  printf("GET arr[0]: %d\n", element);
+  printf("arr size: %zu\n", ARRAY_SIZE(arr));
+  printf("arr empty ? %s\n", ARRAY_EMPTY(arr) ? "true" : "false");
   ARRAY_CLEANUP(arr);
 
   return 0;
