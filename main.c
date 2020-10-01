@@ -56,10 +56,10 @@ int main(int argc, char **argv) {
   LL_CLEANUP(ll2);
 
   ARRAY_CREATE(arr);
-  ARRAY_ADD(arr, &n1);
-  ARRAY_ADD(arr, &n2);
-  ARRAY_ADD(arr, &n3);
-  ARRAY_SET(arr, &n2, 2);
+  ARRAY_ADD(arr, n1);
+  ARRAY_ADD(arr, n2);
+  ARRAY_ADD(arr, n3);
+  ARRAY_SET(arr, n2, 2);
   ARRAY_DELETE(arr, 1);
   ARRAY_TO_STRING(arr, int_print_fmt);
   int element = ARRAY_GET(arr, 0, int);
