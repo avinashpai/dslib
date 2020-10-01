@@ -46,11 +46,11 @@ int main(int argc, char **argv) {
   printf("SORTED: \n");
   LL_TO_STRING(ll2_sorted, int_print_fmt);
 
-  printf("ll1 size: %zu\n", ll_size(&ll1));
-  printf("ll2 size: %zu\n", ll_size(&ll2));
+  printf("ll1 size: %zu\n", LL_SIZE(ll1));
+  printf("ll2 size: %zu\n", LL_SIZE(ll2));
 
-  printf("ll1 empty? %s\n", ll_empty(&ll1) ? "true" : "false");
-  printf("ll2 empty? %s\n", ll_empty(&ll2) ? "true" : "false");
+  printf("ll1 empty? %s\n", LL_EMPTY(ll1) ? "true" : "false");
+  printf("ll2 empty? %s\n\n", LL_EMPTY(ll2) ? "true" : "false");
 
   LL_CLEANUP(ll1);
   LL_CLEANUP(ll2);
@@ -59,8 +59,12 @@ int main(int argc, char **argv) {
   ARRAY_ADD(arr, &n1);
   ARRAY_ADD(arr, &n2);
   ARRAY_ADD(arr, &n3);
-  // ARRAY_SET(arr, &n2, 2);
+  ARRAY_SET(arr, &n2, 2);
+  ARRAY_DELETE(arr, 1);
   ARRAY_TO_STRING(arr, int_print_fmt);
+  int element = ARRAY_GET(arr, 0, int);
+  printf("GET arr[0]: %d\n\n", element);
+  ARRAY_CLEANUP(arr);
 
   return 0;
 }

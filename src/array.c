@@ -29,7 +29,6 @@ void array_delete(array *arr, size_t index) {
     return;
   }
 
-  free(arr->elements[index]);
   arr->elements[index] = NULL;
 
   for (int i = index; i < arr->size - 1; ++i) {
@@ -52,12 +51,7 @@ void *array_get(array *arr, size_t index) {
   return arr->elements[index];
 }
 
-void array_cleanup(array *arr) {
-  for (int i = 0; i < arr->size; ++i) {
-    free(arr->elements[i]);
-  }
-  free(arr->elements);
-}
+void array_cleanup(array *arr) { free(arr->elements); }
 
 void array_to_string(array *arr,
                      void (*print_fmt)(size_t num_elems, void *data)) {
