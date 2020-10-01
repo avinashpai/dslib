@@ -7,9 +7,9 @@
 
 typedef struct array array;
 
-#define ARRAY_CREATE(name, type)                                               \
+#define ARRAY_CREATE(name)                                                     \
   array name;                                                                  \
-  array_create(&name, type)
+  array_create(&name)
 #define ARRAY_SIZE(array) array_size(&array)
 #define ARRAY_EMPTY(array) array_empty(&array)
 #define ARRAY_ADD(array, data) array_add(&array, (void *)data)
@@ -21,12 +21,11 @@ typedef struct array array;
 
 struct array {
   void **elements;
-  int type;
   size_t size;
   size_t capacity;
 };
 
-void array_create(array *arr, int type);
+void array_create(array *arr);
 size_t array_size(array *arr) { return arr->size; }
 bool array_empty(array *arr) { return arr->size == 0; }
 void array_add(array *arr, void *data);

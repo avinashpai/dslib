@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
   LL_CLEANUP(ll1);
   LL_CLEANUP(ll2);
 
-  ARRAY_CREATE(arr, INT);
+  ARRAY_CREATE(arr);
   ARRAY_ADD(arr, &n1);
   ARRAY_ADD(arr, &n2);
   ARRAY_ADD(arr, &n3);

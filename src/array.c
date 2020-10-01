@@ -2,11 +2,10 @@
 
 static void array_resize(array *arr, size_t capacity);
 
-void array_create(array *arr, int type) {
+void array_create(array *arr) {
   arr->capacity = ARRAY_INIT_CAPACITY;
   arr->size = 0;
   arr->elements = malloc(sizeof(void *) * arr->capacity);
-  arr->type = type;
 }
 
 void array_set(array *arr, void *data, size_t index) {
