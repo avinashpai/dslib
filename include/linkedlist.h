@@ -3,7 +3,7 @@
 
 #include <common.h>
 
-typedef struct node node;
+typedef struct ll_node ll_node;
 typedef struct list list;
 
 #define LL_CREATE(name)                                                        \
@@ -27,17 +27,17 @@ typedef struct list list;
 #define LL_TO_STRING(list, print_fmt) ll_to_string(&list, print_fmt)
 #define LL_SORT(list, cmp) *ll_sort(&list, cmp)
 
-struct node {
-  node *prev;
-  node *next;
+struct ll_node {
+  ll_node *prev;
+  ll_node *next;
   void *data;
   size_t num_elems;
   int type;
 };
 
 struct list {
-  node *head;
-  node *tail;
+  ll_node *head;
+  ll_node *tail;
   size_t size;
 };
 
@@ -59,7 +59,7 @@ void *ll_back(list *list);
 
 bool ll_contains(list *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-node *ll_get(list *list, void *data, bool (*cmp)(void *d1, void *d2));
+ll_node *ll_get(list *list, void *data, bool (*cmp)(void *d1, void *d2));
 
 void ll_remove(list *list, void *data, bool (*cmp)(void *d1, void *d2));
 

@@ -28,7 +28,7 @@
 #define SLINKED_LIST_H
 #include <common.h>
 
-typedef struct node node;
+typedef struct sll_node sll_node;
 typedef struct slist slist;
 
 #define SLL_CREATE(name)                                                       \
@@ -52,15 +52,15 @@ typedef struct slist slist;
 #define SLL_TO_STRING(list, print_fmt) sll_to_string(&list, print_fmt)
 #define SLL_SORT(list, cmp) *sll_sort(&list, cmp)
 
-struct node {
+struct sll_node {
   void *data;
   size_t num_elems;
   int type;
-  node *next;
+  sll_node *next;
 };
 
 struct slist {
-  node *head;
+  sll_node *head;
   size_t size;
 };
 
@@ -82,7 +82,7 @@ void *sll_back(slist *list);
 
 bool sll_contains(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 
-node *sll_get(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
+sll_node *sll_get(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 
 void sll_remove(slist *list, void *data, bool (*cmp)(void *d1, void *d2));
 

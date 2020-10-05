@@ -1,8 +1,8 @@
 #include <linkedlist.h>
 
-static node *ll_create_node(size_t num_elems, size_t sizeof_data, void *data,
-                            int type);
-static void ll_free(node *n);
+static ll_node *ll_create_node(size_t num_elems, size_t sizeof_data, void *data,
+                               int type);
+static void ll_free(ll_node *n);
 
 void ll_create(list *list) {
   list->head = NULL;
@@ -12,7 +12,7 @@ void ll_create(list *list) {
 
 void ll_cleanup(list *list) {
   while (list->head != NULL) {
-    node *tmp = list->head;
+    ll_node *tmp = list->head;
     list->head = list->head->next;
 
     ll_free(tmp);
@@ -28,7 +28,7 @@ void ll_clear(list *list) {
 
 void ll_push_front(list *list, size_t num_elems, size_t sizeof_data, void *data,
                    int type) {
-  node *new_node = ll_create_node(num_elems, sizeof_data, data, type);
+  ll_node *new_node = ll_create_node(num_elems, sizeof_data, data, type);
   list->size++;
 
   if (list->head != NULL) {
@@ -41,7 +41,7 @@ void ll_push_front(list *list, size_t num_elems, size_t sizeof_data, void *data,
 
 void ll_pop_front(list *list) {
   if (list->head != NULL) {
-    node *tmp = list->head;
+    ll_node *tmp = list->head;
     list->head = list->head->next;
     list->head->prev = NULL;
     ll_free(tmp);
@@ -55,7 +55,7 @@ void *ll_front(list *list) {
 
 void ll_push_back(list *list, size_t num_elems, size_t sizeof_data, void *data,
                   int type) {
-  node *new_node = ll_create_node(num_elems, sizeof_data, data, type);
+  ll_node *new_node = ll_create_node(num_elems, sizeof_data, data, type);
   list->size++;
 
   if (list->head == NULL) {
@@ -78,7 +78,7 @@ void ll_pop_back(list *list) {
     if (list->tail == NULL) {
       ll_free(list->head);
     } else {
-      node *tmp = list->tail;
+      ll_node *tmp = list->tail;
       list->tail->prev->next = NULL;
       list->tail = list->tail->prev;
       ll_free(tmp);
@@ -100,7 +100,7 @@ void *ll_back(list *list) {
 }
 
 bool ll_contains(list *list, void *data, bool (*cmp)(void *, void *)) {
-  node *tmp = list->head;
+  ll_node *tmp = list->head;
   while (tmp != NULL) {
     if (cmp(data, tmp->data)) {
       return true;
@@ -110,8 +110,8 @@ bool ll_contains(list *list, void *data, bool (*cmp)(void *, void *)) {
   return false;
 }
 
-node *ll_get(list *list, void *data, bool (*cmp)(void *, void *)) {
-  node *tmp = list->head;
+ll_node *ll_get(list *list, void *data, bool (*cmp)(void *, void *)) {
+  ll_node *tmp = list->head;
   while (tmp != NULL) {
     if (cmp(data, tmp->data)) {
       return tmp;
@@ -122,7 +122,7 @@ node *ll_get(list *list, void *data, bool (*cmp)(void *, void *)) {
 }
 
 void ll_remove(list *list, void *data, bool (*cmp)(void *, void *)) {
-  node *tmp = list->head;
+  ll_node *tmp = list->head;
 
   while (tmp != NULL) {
     if (cmp(data, tmp->data)) {
@@ -147,7 +147,7 @@ void ll_to_string(list *list, void (*print_fmt)(size_t, void *)) {
 
   printf("[data]: \n");
 
-  node *tmp = list->head;
+  ll_node *tmp = list->head;
   while (tmp != NULL) {
     print_fmt(tmp->num_elems, tmp->data);
 
@@ -158,7 +158,7 @@ void ll_to_string(list *list, void (*print_fmt)(size_t, void *)) {
 
 // TODO: FIX LIST SORTING
 list *ll_sort(list *list, int (*cmp)(void *, void *)) {
-  node *p, *q, *e, *tail;
+  ll_node *p, *q, *e, *tail;
   int insize, nmerges, psize, qsize, i;
 
   if (!list->head) {
@@ -228,9 +228,9 @@ list *ll_sort(list *list, int (*cmp)(void *, void *)) {
   }
 }
 
-static node *ll_create_node(size_t num_elems, size_t sizeof_data, void *data,
-                            int type) {
-  node *new_node = malloc(sizeof(node));
+static ll_node *ll_create_node(size_t num_elems, size_t sizeof_data, void *data,
+                               int type) {
+  ll_node *new_node = malloc(sizeof(ll_node));
 
   if (new_node != NULL) {
 
@@ -269,7 +269,7 @@ static node *ll_create_node(size_t num_elems, size_t sizeof_data, void *data,
   return NULL;
 }
 
-static void ll_free(node *n) {
+static void ll_free(ll_node *n) {
   free(n->data);
   free(n);
   n = NULL;

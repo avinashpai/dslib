@@ -1,0 +1,15 @@
+ [BUFFER] 
+ [FILE] dslib /Users/avinashpai/dev/utils/libs/dslib
+      build                                                                         288 B
+ M    include                                                                       192 B
+     │  array.h                                                                   1.33 kB
+     │  common.h                                                                    102 B
+ M   │  linkedlist.h                                                              2.32 kB
+ M   └  slinkedlist.h                                                             3.48 kB
+ M    src                                                                           160 B
+     │  array.c                                                                   1.55 kB
+ M   │  linkedlist.c                                                              5.58 kB
+ M   └  slinkedlist.c                                                             5.62 kB
+      CMakeLists.txt                                                                340 B
+ ?    compile_commands.json → →build/compile_commands.json                           27 B
+M     main.c                                                                      2.07 kB
